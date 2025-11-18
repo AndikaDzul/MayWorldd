@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Param, Body } from '@nestjs/common';
 import { OrderService } from './order.service';
 import { Order } from './order.schema';
 
@@ -6,14 +6,20 @@ import { Order } from './order.schema';
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
-  @Post()
-  async create(@Body() body: Partial<Order>) {
-    console.log('Order diterima:', body); // cek di console backend
-    return this.orderService.create(body);
-  }
-
   @Get()
   async findAll(): Promise<Order[]> {
     return this.orderService.findAll();
+  }
+
+  @Post()
+  async create(@Body() orderData: Partial<Order>): Promise<Order> {
+    return this.orderService.create(orderData);
+  }
+
+  // ✅ Tambahkan endpoint hapus order
+  @Delete(':id')
+  async delete(@Param('id') id: string): Promise<{ message: string }> {
+    await this.orderService.delete(id);
+    return { message: 'Order berhasil dihapus' };
   }
 }
