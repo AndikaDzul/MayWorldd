@@ -8,21 +8,22 @@ import { OrderModule } from './order/order.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { CartModule } from './cart/cart.module';
+import { VoiceNotesModule } from './voice-notes/voice-notes.module';
 
 @Module({
   imports: [
-    // 🔧 Load file .env secara global agar bisa diakses dari seluruh project
+    // 🔧 Load file .env secara global
     ConfigModule.forRoot({
       isGlobal: true,
     }),
 
-    // 🔗 Koneksi MongoDB pakai konfigurasi dari .env
+    // 🔗 Koneksi MongoDB menggunakan .env
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         const uri = configService.get<string>('MONGO_URI');
-        const dbName = configService.get<string>('MONGO_DB');
+        const dbName = configService.get<string>('MONGO_DB') || configService.get<string>('DB_NAME');
 
         if (!uri) {
           throw new Error('❌ MONGO_URI tidak ditemukan di file .env');
@@ -30,16 +31,17 @@ import { CartModule } from './cart/cart.module';
 
         return {
           uri,
-          dbName: dbName || undefined, // optional
+          dbName: dbName || undefined,
         };
       },
     }),
 
-    // 📦 Import semua module utama aplikasi
-    OrderModule,   // Modul untuk pesanan
-    AuthModule,    // Modul autentikasi
-    ProfileModule, // Modul profil pengguna
-    CartModule,    // Modul keranjang belanja
+    // 📦 Import modul aplikasi
+    OrderModule,
+    AuthModule,
+    ProfileModule,
+    CartModule,
+    VoiceNotesModule,
   ],
 })
 export class AppModule {}
