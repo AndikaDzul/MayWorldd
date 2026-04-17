@@ -35,6 +35,9 @@ export async function bootstrap() {
   if (process.env.NODE_ENV !== 'production') {
     await app.listen(port, '0.0.0.0');
     console.log(`🚀 Server running on http://localhost:${port}`);
+  } else {
+    // WAJIB: Inisialisasi app agar route terdaftar di Vercel
+    await app.init();
   }
 
   return app.getHttpAdapter().getInstance(); // Export for Vercel
