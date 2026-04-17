@@ -9,4 +9,13 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
+
+  @Get('health')
+  async getHealth() {
+    return {
+      status: 'ok',
+      database: process.env.MONGO_DB || process.env.DB_NAME || 'not_set',
+      timestamp: new Date().toISOString()
+    };
+  }
 }
