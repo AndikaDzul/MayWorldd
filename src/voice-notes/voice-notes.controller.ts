@@ -6,6 +6,11 @@ import { VoiceNotesService } from './voice-notes.service';
 export class VoiceNotesController {
   constructor(private readonly voiceNotesService: VoiceNotesService) {}
 
+  @Get('list')
+  async getAllVoiceNotes() {
+    return this.voiceNotesService.findAllVoiceNotes();
+  }
+
   @Get(':id')
   async getVoiceNote(@Param('id') id: string, @Res() res: express.Response) {
     try {
