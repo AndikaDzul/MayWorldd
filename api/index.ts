@@ -1,6 +1,10 @@
 import { bootstrap } from '../src/main';
 
+let cachedApp: any;
+
 export default async (req: any, res: any) => {
-  const app = await bootstrap();
-  return app(req, res);
+  if (!cachedApp) {
+    cachedApp = await bootstrap();
+  }
+  return cachedApp(req, res);
 };
