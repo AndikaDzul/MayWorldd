@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { CartModule } from './cart/cart.module';
 import { VoiceNotesModule } from './voice-notes/voice-notes.module';
+import { GalleryModule } from './gallery/gallery.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { VoiceNotesModule } from './voice-notes/voice-notes.module';
     ProfileModule,
     CartModule,
     VoiceNotesModule,
+    GalleryModule,
   ],
 })
 export class AppModule {}
