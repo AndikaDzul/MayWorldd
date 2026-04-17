@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Res, NotFoundException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Res, NotFoundException } from '@nestjs/common';
 import * as express from 'express';
 import { VoiceNotesService } from './voice-notes.service';
 
@@ -9,6 +9,16 @@ export class VoiceNotesController {
   @Get()
   async getAllVoiceNotes() {
     return this.voiceNotesService.findAllVoiceNotes();
+  }
+
+  @Post()
+  async createVoiceNote(@Body() data: any) {
+    return this.voiceNotesService.createVoiceNote(data);
+  }
+
+  @Post('chat')
+  async createChat(@Body() data: any) {
+    return this.voiceNotesService.createChat(data);
   }
 
   @Get(':id')
